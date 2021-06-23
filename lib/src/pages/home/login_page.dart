@@ -33,13 +33,16 @@ class _LogInPageState extends State<LogInPage> {
                 children: <Widget>[
                   _getHeader(),
                   Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: SingleChildScrollView(
                           child: Form(
                               key: _formKey,
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
+                                    SizedBox(
+                                      height: 160,
+                                    ),
                                     TextFormField(
                                       validator: (val) =>
                                           val.isEmpty ? 'Enter an email' : null,
@@ -71,56 +74,60 @@ class _LogInPageState extends State<LogInPage> {
                     error,
                     style: TextStyle(color: Colors.red, fontSize: 14),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Log in',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey.shade800),
-                      ),
-                      CircleAvatar(
-                          backgroundColor: Color(0xfff8ac6d1),
-                          radius: 35,
-                          child: IconButton(
-                              icon: Icon(Icons.arrow_forward),
-                              color: Colors.white,
-                              onPressed: () async {
-                                if (_formKey.currentState.validate()) {
-                                  dynamic result = await _auth.logInEmailPass(
-                                      email, password);
-                                  if (result == null) {
-                                    setState(
-                                        () => error = 'No se pudo ingresar');
-                                  }
-                                }
-                              })),
-                    ],
-                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Log in',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade800),
+                          ),
+                          CircleAvatar(
+                              backgroundColor: Color(0xfff8ac6d1),
+                              radius: 35,
+                              child: IconButton(
+                                  icon: Icon(Icons.arrow_forward),
+                                  color: Colors.white,
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      dynamic result = await _auth
+                                          .logInEmailPass(email, password);
+                                      if (result == null) {
+                                        setState(() =>
+                                            error = 'No se pudo ingresar');
+                                      }
+                                    }
+                                  })),
+                        ],
+                      )),
                   /* _getSignIn(context), */
                   /* _getBottomRow(context), */
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
-                          color: Colors.grey.shade700,
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                        alignment: FractionalOffset(-0.06, 0.5),
+                        child: TextButton(
+                          child: Text('Sign Up Now',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.underline,
+                              )),
                           onPressed: () {
                             widget.toggleView();
                           },
                           /* var route = MaterialPageRoute(builder: (context) => LogInPage());
                   Navigator.push(context, route); */
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 30.0)
+                      ))
                 ],
               ),
             ),
+            SizedBox(height: 30.0)
           ],
         ),
       ),

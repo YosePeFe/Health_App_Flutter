@@ -25,7 +25,10 @@ class AddNote extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(border: Border.all()),
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: TextField(
                 controller: titulo,
                 decoration: InputDecoration(hintText: 'Title'),
@@ -36,7 +39,10 @@ class AddNote extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(border: Border.all()),
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: TextField(
                   controller: contenido,
                   maxLines: null,

@@ -24,7 +24,7 @@ class _MenuPageState extends State<MenuPage> {
           NavBar(),
           _getBackBtn(context),
           _getProfileBtn(context),
-          _getSignOutBtn(context),
+          /* _getSignOutBtn(context), */
         ],
       ),
     );
@@ -64,7 +64,7 @@ _getProfileBtn(BuildContext context) {
       ));
 }
 
-_getSignOutBtn(BuildContext context) {
+/* _getSignOutBtn(BuildContext context) {
   final AuthService _auth = AuthService();
   return Positioned(
       bottom: 25,
@@ -83,7 +83,7 @@ _getSignOutBtn(BuildContext context) {
               await _auth.signOut();
             }),
       ));
-}
+} */
 
 class CustomBody extends StatelessWidget {
   @override
