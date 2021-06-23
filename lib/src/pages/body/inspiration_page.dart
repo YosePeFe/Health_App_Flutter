@@ -80,19 +80,9 @@ _swiperTarjetas(BuildContext context) {
   return Column(children: [
     SizedBox(height: 140),
     Swiper(
-      /* future: Future.value(
-            quotes.map((item) => Image((item))).toList()
-          ), */
       layout: SwiperLayout.STACK,
       itemWidth: _screenSize.width * 0.85,
       itemHeight: _screenSize.height * 0.65,
-      /* FutureBuilder(
-            future: Future.value(),
-            initialData: InitialData,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              return ;
-            },
-          ), */
       itemBuilder: (BuildContext context, int index) {
         return ClipRRect(
             borderRadius: BorderRadius.circular(20),

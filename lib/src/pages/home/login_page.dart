@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/signup_page.dart';
 import 'menu_page.dart';
+import 'package:health_app/src/services/authservice.dart';
 
+class LogInPage extends StatefulWidget {
+  final Function toggleView;
+  LogInPage({this.toggleView});
 
-class LogInPage extends StatelessWidget {
+  @override
+  _LogInPageState createState() => _LogInPageState();
+}
+
+class _LogInPageState extends State<LogInPage> {
+  final AuthService _auth = AuthService(); //Instancia Servicio Auth
+  final _formKey = GlobalKey<FormState>();
+
+  // text field state
+  String email = '';
+  String password = '';
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +32,92 @@ class LogInPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   _getHeader(),
-                  _getTextFields(),
-                  _getSignIn(context),
-                  _getBottomRow(context),
+                  Expanded(
+                      flex: 2,
+                      child: SingleChildScrollView(
+                          child: Form(
+                              key: _formKey,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    TextFormField(
+                                      validator: (val) =>
+                                          val.isEmpty ? 'Enter an email' : null,
+                                      decoration:
+                                          InputDecoration(labelText: 'Email'),
+                                      onChanged: (val) {
+                                        setState(() => email = val);
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    TextFormField(
+                                      validator: (val) => val.length < 6
+                                          ? 'Enter a password 6+ chars long'
+                                          : null,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          labelText: 'Password'),
+                                      onChanged: (val) {
+                                        setState(() => password = val);
+                                      },
+                                    ),
+                                  ])))),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Log in',
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade800),
+                      ),
+                      CircleAvatar(
+                          backgroundColor: Color(0xfff8ac6d1),
+                          radius: 35,
+                          child: IconButton(
+                              icon: Icon(Icons.arrow_forward),
+                              color: Colors.white,
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  dynamic result = await _auth.logInEmailPass(
+                                      email, password);
+                                  if (result == null) {
+                                    setState(
+                                        () => error = 'No se pudo ingresar');
+                                  }
+                                }
+                              })),
+                    ],
+                  ),
+                  /* _getSignIn(context), */
+                  /* _getBottomRow(context), */
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          color: Colors.grey.shade700,
+                          onPressed: () {
+                            widget.toggleView();
+                          },
+                          /* var route = MaterialPageRoute(builder: (context) => LogInPage());
+                  Navigator.push(context, route); */
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30.0)
                 ],
               ),
             ),
@@ -35,26 +134,23 @@ _getBottomRow(context) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SignUpPage()));
+        IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          color: Colors.grey.shade700,
+          onPressed: () {
+            /* var route = MaterialPageRoute(builder: (context) => LogInPage());
+                  Navigator.push(context, route); */
           },
-          child: Text(
-            'Sign up today for free',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
-            ),
-          ),
         ),
       ],
     ),
   );
 }
 
-_getSignIn(BuildContext context) {
+/* _getSignIn(BuildContext context) {
+  final AuthService _auth = AuthService(); //Instancia Servicio Auth
+  String email = '';
+  String password = '';
   return Expanded(
     flex: 1,
     child: Row(
@@ -71,51 +167,72 @@ _getSignIn(BuildContext context) {
           backgroundColor: Color(0xfff8ac6d1),
           radius: 35,
           child: IconButton(
-            icon: Icon(Icons.arrow_forward),
-            color: Colors.white,
-            onPressed: () {
+              icon: Icon(Icons.arrow_forward),
+              color: Colors.white,
+              onPressed: () async {
+                print(email);
+                print(password);
+              }
+              /* onPressed: () async {
+                dynamic result = await _auth.signInAnon();
+                if (result == null) {
+                  print('error signing in');
+                } else {
+                  print('signed in');
+                  print(result.uid);
+                }
+              } */
+              /* onPressed: () {
               var route = MaterialPageRoute(builder: (context) => MenuPage());
               Navigator.push(context, route);
-            },
-          ),
+            }, */
+              ),
         )
       ],
     ),
   );
-}
+} */
 
-_getTextFields() {
+/* _getTextFields() {
+  String email = '';
+  String password = '';
   return Expanded(
-    flex: 4,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        SizedBox(
-          height: 15,
+      flex: 4,
+      child: Form(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            SizedBox(
+              height: 15,
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'User Name'),
+              onChanged: (val) {
+                setState(() => email = val);
+              },
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(labelText: 'Password'),
+              onChanged: (val) {
+                setState(() => password = val);
+              },
+            ),
+            SizedBox(
+              height: 25,
+            ),
+          ],
         ),
-        TextField(
-          decoration: InputDecoration(labelText: 'User Name'),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(labelText: 'Password'),
-        ),
-        SizedBox(
-          height: 25,
-        ),
-      ],
-    ),
-  );
-}
+      ));
+} */
 
 _getHeader() {
-  return Expanded(
-      flex: 3,
+  return Container(
       child: Container(
-          alignment: Alignment(-1.0, -0.4),
+          alignment: Alignment(0.0, -0.6),
           child: RichText(
             text: TextSpan(
               children: [

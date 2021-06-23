@@ -1,128 +1,395 @@
 import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/menu_page.dart';
+import 'package:video_player/video_player.dart';
 
-class SelfesteemPage extends StatelessWidget {
+class SelfesteemPage extends StatefulWidget {
+  @override
+  _SelfesteemPageState createState() => _SelfesteemPageState();
+}
+
+class _SelfesteemPageState extends State<SelfesteemPage> {
+  final asset = 'assets/video.mp4';
+  VideoPlayerController _controller;
+  VideoPlayerController _controller2;
+  VideoPlayerController _controller3;
+  VideoPlayerController _controller4;
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/video_1.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+    _controller2 = VideoPlayerController.asset('assets/video_2.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+    _controller3 = VideoPlayerController.asset('assets/video_3.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+    _controller4 = VideoPlayerController.asset('assets/video_4.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(children: <Widget>[CustomBody(), NavBar(), VideoPlayer()]));
+        body: Stack(children: <Widget>[
+      CustomBody(),
+      NavBar(),
+      Stack(
+        children: [
+          Expanded(
+              child: SingleChildScrollView(
+                  child: Column(children: [
+            SizedBox(
+              height: 80,
+            ),
+            Container(
+                child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.all(25),
+              elevation: 10,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      height: 200,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 300,
+                            child: _controller.value.isInitialized
+                                ? AspectRatio(
+                                    aspectRatio: _controller.value.aspectRatio,
+                                    child: VideoPlayer(_controller),
+                                  )
+                                : Container(),
+                          ),
+                        ],
+                      )),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ))),
+                    onPressed: () {
+                      setState(() {
+                        _controller.value.isPlaying
+                            ? _controller.pause()
+                            : _controller.play();
+                      });
+                    },
+                    child: Icon(
+                      _controller.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    subtitle: Text(
+                      'Autoestima',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
+              ),
+            )),
+            Container(
+                child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.all(25),
+              elevation: 10,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      height: 200,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 300,
+                            child: _controller2.value.isInitialized
+                                ? AspectRatio(
+                                    aspectRatio: _controller2.value.aspectRatio,
+                                    child: VideoPlayer(_controller2),
+                                  )
+                                : Container(),
+                          ),
+                        ],
+                      )),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ))),
+                    onPressed: () {
+                      setState(() {
+                        _controller2.value.isPlaying
+                            ? _controller2.pause()
+                            : _controller2.play();
+                      });
+                    },
+                    child: Icon(
+                      _controller2.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    subtitle: Text(
+                      '¿Qué es el Autoestima?',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
+              ),
+            )),
+            Container(
+                child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.all(25),
+              elevation: 10,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      height: 200,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 300,
+                            child: _controller3.value.isInitialized
+                                ? AspectRatio(
+                                    aspectRatio: _controller3.value.aspectRatio,
+                                    child: VideoPlayer(_controller3),
+                                  )
+                                : Container(),
+                          ),
+                        ],
+                      )),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ))),
+                    onPressed: () {
+                      setState(() {
+                        _controller3.value.isPlaying
+                            ? _controller3.pause()
+                            : _controller3.play();
+                      });
+                    },
+                    child: Icon(
+                      _controller3.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
+                    subtitle: Text(
+                      'Mensaje para reflexionar (Michael Ronda - Es Posible)',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
+              ),
+            )),
+            Container(
+                child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.all(25),
+              elevation: 10,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      height: 200,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 300,
+                            child: _controller4.value.isInitialized
+                                ? AspectRatio(
+                                    aspectRatio: _controller4.value.aspectRatio,
+                                    child: VideoPlayer(_controller4),
+                                  )
+                                : Container(),
+                          ),
+                        ],
+                      )),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ))),
+                    onPressed: () {
+                      setState(() {
+                        _controller4.value.isPlaying
+                            ? _controller4.pause()
+                            : _controller4.play();
+                      });
+                    },
+                    child: Icon(
+                      _controller4.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
+                    subtitle: Text(
+                      'Si pudieras cambiar una sola parte de tu cuerpo - ¿Qué cambiarias?',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
+              ),
+            )),
+          ]))),
+        ],
+      )
+    ]));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
 
-class VideoPlayer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        /* Padding(padding: EdgeInsets.only(left: 40.0)), */
-        /* SingleChildScrollView( */
-          Column(children: [          
-            SizedBox(height: 80,),
-            Container(
-                child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              margin: EdgeInsets.all(25),
-              elevation: 10,
-              child: Column(
-                children: <Widget>[
-                  /* Container(
-              height: 250,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/meditate.jpg'),
-                    fit: BoxFit.cover),
-                border: Border.all(
-                  color: Colors.white,
-                  width: 8,
+@override
+Widget build(BuildContext context) {
+  return Stack(
+    children: [
+      Column(children: [
+        SizedBox(
+          height: 80,
+        ),
+        Container(
+            child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: EdgeInsets.all(25),
+          elevation: 10,
+          child: Column(
+            children: <Widget>[
+              Container(
+                  height: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.play_circle_outline_rounded,
+                        color: Color(0xfff8ac6d1),
+                        size: 100,
+                      ),
+                    ],
+                  )),
+              ListTile(
+                contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
+                title: Text(
+                  'Self-Esteem',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
                 ),
-                borderRadius: BorderRadius.circular(12),
+                subtitle: Text(
+                  '"You yourself, as much as anybody in the entire universe, deserve your love and affection." -- Buddha',
+                  style: TextStyle(fontSize: 15),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              padding: EdgeInsets.all(9.0),
-            ), */
-                  Container(
-                      height: 200,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.play_circle_outline_rounded,
-                            color: Color(0xfff8ac6d1),
-                            size: 100,
-                          ),
-                        ],
-                      )),
-                  ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
-                    title: Text(
-                      'Self-Esteem',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    subtitle: Text(
-                      '"You yourself, as much as anybody in the entire universe, deserve your love and affection." -- Buddha',
-                      style: TextStyle(fontSize: 15),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  )
-                  /* Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(onPressed: () => {}, child: Text('Aceptar')),
-                TextButton(onPressed: () => {}, child: Text('Cancelar'))
-              ],
-            ) */
-                ],
+              SizedBox(
+                height: 15,
+              )
+            ],
+          ),
+        )),
+        Container(
+            child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: EdgeInsets.all(25),
+          elevation: 10,
+          child: Column(
+            children: <Widget>[
+              Container(
+                  height: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.play_circle_outline_rounded,
+                        color: Color(0xfff8ac6d1),
+                        size: 100,
+                      ),
+                    ],
+                  )),
+              ListTile(
+                contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
+                title: Text(
+                  'Self-Esteem',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+                subtitle: Text(
+                  '"Too many people overvalue what they are not and undervalue what they are." -- Malcolm S. Forbes',
+                  style: TextStyle(fontSize: 15),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            )),
-            Container(
-                child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              margin: EdgeInsets.all(25),
-              elevation: 10,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      height: 200,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.play_circle_outline_rounded,
-                            color: Color(0xfff8ac6d1),
-                            size: 100,
-                          ),
-                        ],
-                      )),
-                  ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
-                    title: Text(
-                      'Self-Esteem',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    subtitle: Text(
-                      '"Too many people overvalue what they are not and undervalue what they are." -- Malcolm S. Forbes',
-                      style: TextStyle(fontSize: 15),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  )
-                ],
-              ),
-            )),
-            
-          ]),
-        
-      ],
-    );
-  }
+              SizedBox(
+                height: 15,
+              )
+            ],
+          ),
+        )),
+      ]),
+    ],
+  );
 }
 
 class CustomBody extends StatelessWidget {

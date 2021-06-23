@@ -1,11 +1,74 @@
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:health_app/src/pages/home/menu_page.dart';
+import 'package:health_app/src/pages/body/add_note_page.dart';
+import 'package:health_app/src/pages/body/edit_note_page.dart';
+
 
 class NotesPage extends StatelessWidget {
+  final ref = FirebaseFirestore.instance.collection('notas');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => AddNote()));
+          },
+        ),
+        body: Stack(children: <Widget>[
+          CustomBody(),
+          NavBar(),
+          StreamBuilder(
+              stream: ref.snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                return GridView.builder(
+                    padding: EdgeInsets.only(top: 90),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemCount: snapshot.hasData ? snapshot.data.docs.length : 0,
+                    itemBuilder: (_, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => EditNote(
+                                        docToEdit: snapshot.data.docs[index],
+                                      )));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(15),
+                          height: 100,
+                          color: Colors.grey[200],
+                          child: Column(
+                            children: [
+                              Text(
+                                snapshot.data.docs[index]['titulo'],
+                                style: TextStyle(
+                                    color: Colors.primaries[Random()
+                                        .nextInt(Colors.primaries.length)],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                snapshot.data.docs[index]['contenido'],
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              })
+        ]));
+    /* return Scaffold(
         body: Stack(children: <Widget>[
       CustomBody(),
       NavBar(),
@@ -36,11 +99,11 @@ class NotesPage extends StatelessWidget {
               _Tile(8),
             ],
           )),
-    ]));
+    ])); */
   }
 }
 
-class _Tile extends StatelessWidget {
+/* class _Tile extends StatelessWidget {
   const _Tile(this.index);
 
   final int index;
@@ -59,7 +122,7 @@ class _Tile extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Text(
-                  'Content',
+                  'Contenido',
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
@@ -69,7 +132,7 @@ class _Tile extends StatelessWidget {
       ),
     );
   }
-}
+} */
 
 class CustomBody extends StatelessWidget {
   @override
@@ -85,15 +148,15 @@ class CustomBody extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 40,
-          right: 25,
-          child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: 'Notes',
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          ),
-        )),
+            top: 40,
+            right: 25,
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'Notes',
+                style: TextStyle(fontSize: 30, color: Colors.white),
+              ),
+            )),
         Positioned(
           top: 35,
           left: 25,

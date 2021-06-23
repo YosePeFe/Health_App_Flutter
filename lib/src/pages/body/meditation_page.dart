@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/menu_page.dart';
 
@@ -17,6 +19,22 @@ class Song {
   final String time;
 
   Song(this.name, this.time);
+}
+
+List<Track> tracks = [
+  Track('audio-1.mp3'),
+  Track('audio-2.mp3'),
+  Track('audio-1.mp3'),
+  Track('audio-1.mp3'),
+  Track('audio-1.mp3'),
+  Track('audio-1.mp3'),
+  Track('audio-1.mp3'),
+];
+
+class Track {
+  final String name;
+
+  Track(this.name);
 }
 
 class MeditationPage extends StatelessWidget {
@@ -158,10 +176,15 @@ class PlayButton extends StatelessWidget {
   }
 }
 
+var isPLaying = false;
+AudioCache cache = new AudioCache();
+AudioPlayer player = AudioPlayer();
+
 class CustomBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double listheight = (50 * songs.length).toDouble();
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -175,9 +198,19 @@ class CustomBody extends StatelessWidget {
               itemCount: songs.length,
               itemExtent: 45,
               itemBuilder: (context, index) => ListTile(
-                leading: Icon(
-                    index == 0 ? Icons.play_arrow : Icons.lock_outline,
-                    size: 22),
+                leading:
+                    Icon(index == 0 ? Icons.play_arrow : Icons.pause, size: 22),
+                onTap: () async {
+                  if (isPLaying) {
+                    player.stop();
+                    print('pausó');
+                    isPLaying = false;
+                  } else {
+                    print('juan');
+                    player = await cache.play(tracks[index].name);
+                    isPLaying = true;
+                  }
+                },
                 title: Text(songs[index].name, style: TextStyle(fontSize: 14)),
                 trailing:
                     Text(songs[index].time, style: TextStyle(fontSize: 14)),

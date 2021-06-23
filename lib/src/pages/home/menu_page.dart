@@ -4,11 +4,18 @@ import 'package:health_app/src/pages/body/meditation_page.dart';
 import 'package:health_app/src/pages/body/notes_page.dart';
 import 'package:health_app/src/pages/body/selfesteem_page.dart';
 import 'package:health_app/src/pages/home/login_page.dart';
-import 'package:health_app/src/pages/home/signup_page.dart';
+import 'package:health_app/src/services/authservice.dart';
+import 'user_data_page.dart';
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends StatefulWidget {
+  @override
+  _MenuPageState createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
+    // ignore: missing_required_param
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -16,7 +23,8 @@ class MenuPage extends StatelessWidget {
           // CustomAppbar(),
           NavBar(),
           _getBackBtn(context),
-          _getProfileBtn(context)
+          _getProfileBtn(context),
+          _getSignOutBtn(context),
         ],
       ),
     );
@@ -40,7 +48,7 @@ _getBackBtn(BuildContext context) {
 
 _getProfileBtn(BuildContext context) {
   return Positioned(
-      bottom: 35,
+      bottom: 25,
       left: 25,
       child: CircleAvatar(
         backgroundColor: Color(0xfff8ac6d1),
@@ -49,10 +57,31 @@ _getProfileBtn(BuildContext context) {
           icon: Icon(Icons.person_outline_rounded),
           color: Colors.white,
           onPressed: () {
-            var route = MaterialPageRoute(builder: (context) => SignUpPage());
+            var route = MaterialPageRoute(builder: (context) => Home());
             Navigator.push(context, route);
           },
         ),
+      ));
+}
+
+_getSignOutBtn(BuildContext context) {
+  final AuthService _auth = AuthService();
+  return Positioned(
+      bottom: 25,
+      left: 85,
+      child: CircleAvatar(
+        backgroundColor: Color(0xfff8ac6d1),
+        radius: 25,
+        child: IconButton(
+            icon: Icon(Icons.login_rounded),
+            color: Colors.white,
+            /* onPressed: () {
+            var route = MaterialPageRoute(builder: (context) => SignUpPage());
+            Navigator.push(context, route);
+          }, */
+            onPressed: () async {
+              await _auth.signOut();
+            }),
       ));
 }
 
@@ -139,42 +168,6 @@ class CustomBody extends StatelessWidget {
       ],
     );
   }
-}
-
-class HeaderClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    var sw = size.width;
-    var sh = size.height;
-
-    path.lineTo(sw, 0);
-    path.lineTo(sw, sh);
-    path.cubicTo(sw, sh * 0.7, 0, sh * 0.8, 0, sh * 0.55);
-    path.lineTo(0, sh);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-class MiddClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    var sw = size.width;
-    var sh = size.height;
-    path.cubicTo(0, sh * 0.3, sw, sh * 0.2, sw, sh * 0.45);
-    path.lineTo(sw, sh);
-    path.cubicTo(sw, sh * 0.7, 0, sh * 0.8, 0, sh * 0.55);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
 
 class NavBar extends StatelessWidget {
@@ -292,6 +285,41 @@ class NavBar extends StatelessWidget {
   }
 }
 
+class HeaderClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    var sw = size.width;
+    var sh = size.height;
+
+    path.lineTo(sw, 0);
+    path.lineTo(sw, sh);
+    path.cubicTo(sw, sh * 0.7, 0, sh * 0.8, 0, sh * 0.55);
+    path.lineTo(0, sh);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class MiddClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    var sw = size.width;
+    var sh = size.height;
+    path.cubicTo(0, sh * 0.3, sw, sh * 0.2, sw, sh * 0.45);
+    path.lineTo(sw, sh);
+    path.cubicTo(sw, sh * 0.7, 0, sh * 0.8, 0, sh * 0.55);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
 /* class NavIcon extends StatelessWidget {
   final IconData icon;
   final bool active;

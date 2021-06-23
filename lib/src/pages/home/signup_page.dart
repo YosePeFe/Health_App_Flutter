@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
-import 'menu_page.dart';
-import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:health_app/src/services/authservice.dart';
 
+class SignUpPage extends StatefulWidget {
+  final Function toggleView;
+  SignUpPage({this.toggleView});
 
-class SignUpPage extends StatelessWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final AuthService _auth = AuthService(); //Instancia Servicio Auth
+  final _formKey =
+      GlobalKey<FormState>(); //identificar el formulario y ascoiarlo
+  // text field state
+  String email = '';
+  String password = '';
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,20 +25,141 @@ class SignUpPage extends StatelessWidget {
         painter: BackgroundSignUp(),
         child: Stack(
           children: <Widget>[
+            Positioned(
+              top: 35,
+              left: 25,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                color: Colors.grey.shade700,
+                onPressed: () {
+                  widget.toggleView();
+                  /* var route = MaterialPageRoute(builder: (context) => LogInPage());
+                  Navigator.push(context, route); */
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: <Widget>[
                   /* buildNumberRow(context), */
                   _getHeader(),
-                  _getTextFields(),
+                  Expanded(
+                      flex: 6,
+                      child: SingleChildScrollView(
+                        child: Form(
+                            key: _formKey, //estado y validación del form
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade600)),
+                                      labelText: 'Name',
+                                      labelStyle: TextStyle(
+                                          color: Colors.grey.shade600)),
+                                ),
+                                TextFormField(
+                                  validator: (val) =>
+                                      val.isEmpty ? 'Enter an email' : null,
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade600)),
+                                      labelText: 'Email',
+                                      labelStyle: TextStyle(
+                                          color: Colors.grey.shade600)),
+                                  onChanged: (val) {
+                                    setState(() => email = val);
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade600)),
+                                      labelText: 'Gender',
+                                      labelStyle: TextStyle(
+                                          color: Colors.grey.shade600)),
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade600)),
+                                      labelText: 'Age',
+                                      labelStyle: TextStyle(
+                                          color: Colors.grey.shade600)),
+                                ),
+                                TextFormField(
+                                  validator: (val) => val.length < 6
+                                      ? 'Enter a password 6+ chars long'
+                                      : null,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade600)),
+                                      labelText: 'Password',
+                                      labelStyle: TextStyle(
+                                          color: Colors.grey.shade600)),
+                                  onChanged: (val) {
+                                    setState(() => password = val);
+                                  },
+                                ),
+                              ],
+                            )),
+                      )),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      alignment: Alignment(1.0, 0.7),
+                      child: CircleAvatar(
+                        backgroundColor: Color(0xfff8ac6d1),
+                        radius: 35,
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            color: Colors.white,
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                dynamic result = await _auth.signUpEmailPass(
+                                    email, password);
+                                if (result == null) {
+                                  setState(
+                                      () => error = 'Supply a valid email');
+                                }
+                              }
+                              /* print(email);
+                              print(password); */
+                            }
+                            /* onPressed: () {
+                            var route = MaterialPageRoute(
+                                builder: (context) => MenuPage());
+                            Navigator.push(context, route);
+                          }, */
+                            ),
+                      ),
+                    ),
+                  )
+                  /* _getTextFields(), */
                   /* _genderRadio(groupValue, handleRadioValueChanged), */
-                  _getSignIn(context),
+                  /* _getSignIn(context), */
                   /* _getBottomRow(context), */
                 ],
               ),
             ),
-            _getBackBtn(context)
           ],
         ),
       ),
@@ -33,7 +167,7 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-_getBackBtn(BuildContext context) {
+/* _getBackBtn(BuildContext context) {
   return Positioned(
     top: 35,
     left: 25,
@@ -41,12 +175,12 @@ _getBackBtn(BuildContext context) {
       icon: Icon(Icons.arrow_back_ios),
       color: Colors.grey.shade700,
       onPressed: () {
-        var route = MaterialPageRoute(builder: (context) => LogInPage());
-        Navigator.push(context, route);
+        /* var route = MaterialPageRoute(builder: (context) => LogInPage());
+        Navigator.push(context, route); */
       },
     ),
   );
-}
+} */
 
 /* _getBottomRow(context) {
   return Expanded(
@@ -81,7 +215,7 @@ _getBackBtn(BuildContext context) {
   );
 }*/
 
-_getSignIn(BuildContext context) {
+/* _getSignIn(BuildContext context) {
   return Expanded(
     flex: 5,
     child: Container(
@@ -100,9 +234,9 @@ _getSignIn(BuildContext context) {
       ),
     ),
   );
-}
+} */
 
-_getTextFields() {
+/* _getTextFields() {
   /* var age = 25; */
   return Expanded(
       flex: 6,
@@ -120,7 +254,6 @@ _getTextFields() {
                   labelText: 'Name',
                   labelStyle: TextStyle(color: Colors.grey.shade600)),
             ),
-            
             TextField(
               decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -128,7 +261,33 @@ _getTextFields() {
                   labelText: 'Gender',
                   labelStyle: TextStyle(color: Colors.grey.shade600)),
             ),
-            /* Row buildNumberRow (BuildContext context) {
+            TextField(
+              decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey.shade600)),
+                  labelText: 'Age',
+                  labelStyle: TextStyle(color: Colors.grey.shade600)),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey.shade600)),
+                  labelText: 'User Name',
+                  labelStyle: TextStyle(color: Colors.grey.shade600)),
+            ),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey.shade600)),
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.grey.shade600)),
+            ),
+          ],
+        ),
+      ));
+} */
+/* Row buildNumberRow (BuildContext context) {
     return Row(
       children: <Widget>[
         Container(
@@ -157,33 +316,6 @@ _getTextFields() {
       ],
     );
   }, */
-
-            TextField(
-              decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade600)),
-                  labelText: 'Age',
-                  labelStyle: TextStyle(color: Colors.grey.shade600)),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade600)),
-                  labelText: 'User Name',
-                  labelStyle: TextStyle(color: Colors.grey.shade600)),
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade600)),
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.grey.shade600)),
-            ),
-          ],
-        ),
-      ));
-}
 
 /* _genderRadio(int groupValue, handleRadioValueChanged) =>
     Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
