@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/menu_page.dart';
 import 'package:health_app/src/pages/body/add_note_page.dart';
@@ -7,11 +8,13 @@ import 'package:health_app/src/pages/body/edit_note_page.dart';
 
 
 class NotesPage extends StatelessWidget {
-  final ref = FirebaseFirestore.instance.collection('notas');
+  final ref = FirebaseFirestore.instance.collection('notas').where('iduser',isEqualTo: FirebaseAuth.instance.currentUser.uid);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+          focusColor: Color(0xfff8ac6d1),
+          hoverColor: Color(0xfff8ac6d1),
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(

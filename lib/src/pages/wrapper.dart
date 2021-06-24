@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:health_app/src/pages/auth/auth.dart';
+import 'package:health_app/src/pages/home/login_page.dart';
 import 'package:health_app/src/pages/models/user.dart';
 import 'package:provider/provider.dart';
 import 'home/menu_page.dart';
@@ -12,7 +12,7 @@ class Wrapper extends StatelessWidget {
 
     //return either home or auth
     if (user == null) {
-      return Authenticate();
+      return LogInPage();
     } else {
       return MenuPage();
     }

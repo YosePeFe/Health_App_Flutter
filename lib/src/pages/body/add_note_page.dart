@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddNote extends StatelessWidget {
@@ -14,7 +15,8 @@ class AddNote extends StatelessWidget {
               onPressed: () {
                 ref.add({
                   'titulo': titulo.text,
-                  'contenido': contenido.text
+                  'contenido': contenido.text,
+                  'iduser': FirebaseAuth.instance.currentUser.uid,
                 }).whenComplete(() => Navigator.pop(context));
               },
               child: Text('Save')),

@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:health_app/src/pages/models/user.dart';
-import 'package:health_app/src/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -18,7 +18,7 @@ class AuthService {
   }
 
   //Sign in anon
-  Future signInAnon() async {
+  /* Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User user = result.user;
@@ -29,36 +29,51 @@ class AuthService {
       print(e.toString());
       return null;
     }
-  }
+  } */
 
   //Sign in email / password
-  Future logInEmailPass(String email, String password) async {
+  signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
     }
   }
 
   //Register email / password
-  Future signUpEmailPass(String email, String password) async {
+  createUserWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user;
-
-      //create a new doc for the user with the uid
-      await DatabaseService(uid: user.uid)
-          .updateUserData('Nuevo Usuario', 'Hombre', 20);
-      return _userFromFirebaseUser(user);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: email,
+              password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
     } catch (e) {
-      print(e.toString());
-      return null;
+      print(e);
     }
+  }
+
+  //collection
+  collection(String _nombre, String _genero, String _edad) {
+    final firestoreInstance = FirebaseFirestore.instance;
+    var firebaseUser = FirebaseAuth.instance.currentUser;
+    firestoreInstance.collection("usuarios").doc(firebaseUser.uid).set({
+      "Nombre": _nombre,
+      "Genero": _genero,
+      "Edad": _edad
+    }).then((_) {
+      print("success!");
+    });
   }
 
   //Sign out

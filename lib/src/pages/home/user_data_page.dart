@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_app/src/pages/home/login_page.dart';
 
 import 'menu_page.dart';
 
@@ -9,23 +10,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth2 = FirebaseAuth.instance;
   User user;
   bool isloggedin = false;
 
-  checkAuthentification() async {
+  /* checkAuthentification() async {
     _auth.authStateChanges().listen((user) {
       if (user == null) {
         Navigator.of(context).pushReplacementNamed("Login");
       }
     });
-  }
+  } */
 
   getUser() async {
-    User firebaseUser = _auth.currentUser;
+    User firebaseUser = _auth2.currentUser;
     await firebaseUser?.reload();
-    firebaseUser = _auth.currentUser;
-
+    firebaseUser = _auth2.currentUser;
+    /* FirebaseFirestore.instance.collection('usuarios').doc(firebaseUser.uid).get().then((value) => setState((){
+      this.user.nombre = 
+    })); */
     if (firebaseUser != null) {
       setState(() {
         this.user = firebaseUser;
@@ -34,14 +37,10 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<void> _signOut() async {
-    await _auth.signOut();
-  }
-
   @override
   void initState() {
     super.initState();
-    this.checkAuthentification();
+
     this.getUser();
   }
 
@@ -62,7 +61,7 @@ class _HomeState extends State<Home> {
                   ),
                   Container(
                     child: Text(
-                      "Hola ${user.displayName}\nHas iniciado sesión como: ${user.email}",
+                      "Has iniciado sesión como: ${user.email}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 23.0, fontWeight: FontWeight.bold),
@@ -74,7 +73,10 @@ class _HomeState extends State<Home> {
                   RaisedButton(
                     padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                     onPressed: () {
-                      _signOut();
+                      _auth2.signOut();
+                      var route =
+                          MaterialPageRoute(builder: (context) => LogInPage());
+                      Navigator.push(context, route);
                     },
                     child: Text('Cerrar Sesión',
                         style: TextStyle(

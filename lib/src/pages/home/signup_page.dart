@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_app/src/pages/home/menu_page.dart';
 import 'package:health_app/src/services/authservice.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -14,8 +15,11 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey =
       GlobalKey<FormState>(); //identificar el formulario y ascoiarlo
   // text field state
-  String email = '';
-  String password = '';
+  String _email = '';
+  String _nombre = '';
+  String _password = '';
+  String _genero = '';
+  String _edad = '';
   String error = '';
 
   @override
@@ -56,6 +60,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   height: 15,
                                 ),
                                 TextField(
+                                  onChanged: (value) => setState(() {
+                                    _nombre = value;
+                                  }),
                                   decoration: InputDecoration(
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -74,11 +81,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                       labelText: 'Email',
                                       labelStyle: TextStyle(
                                           color: Colors.grey.shade600)),
-                                  onChanged: (val) {
-                                    setState(() => email = val);
-                                  },
+                                  onChanged: (value) => setState(() {
+                                    _email = value;
+                                  }),
                                 ),
                                 TextFormField(
+                                  onChanged: (value) => setState(() {
+                                    _genero = value;
+                                  }),
                                   decoration: InputDecoration(
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -88,6 +98,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                           color: Colors.grey.shade600)),
                                 ),
                                 TextField(
+                                  onChanged: (value) => setState(() {
+                                    _edad = value;
+                                  }),
                                   decoration: InputDecoration(
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -108,9 +121,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                       labelText: 'Password',
                                       labelStyle: TextStyle(
                                           color: Colors.grey.shade600)),
-                                  onChanged: (val) {
-                                    setState(() => password = val);
-                                  },
+                                  onChanged: (value) => setState(() {
+                                    _password = value;
+                                  }),
                                 ),
                               ],
                             )),
@@ -134,15 +147,15 @@ class _SignUpPageState extends State<SignUpPage> {
                             color: Colors.white,
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                dynamic result = await _auth.signUpEmailPass(
-                                    email, password);
-                                if (result == null) {
-                                  setState(
-                                      () => error = 'Supply a valid email');
-                                }
+                                dynamic result =
+                                    await _auth.createUserWithEmailAndPassword(
+                                        _email, _password);
+                                dynamic result2 = await _auth.collection(
+                                    _nombre, _genero, _edad);
+                                var route = MaterialPageRoute(
+                                    builder: (context) => MenuPage());
+                                Navigator.push(context, route);
                               }
-                              /* print(email);
-                              print(password); */
                             }
                             /* onPressed: () {
                             var route = MaterialPageRoute(

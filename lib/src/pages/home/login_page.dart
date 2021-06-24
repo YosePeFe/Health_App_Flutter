@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/signup_page.dart';
-import 'menu_page.dart';
 import 'package:health_app/src/services/authservice.dart';
 
+import 'menu_page.dart';
+
 class LogInPage extends StatefulWidget {
-  final Function toggleView;
-  LogInPage({this.toggleView});
+  /* final Function toggleView;
+  LogInPage({this.toggleView}); */
 
   @override
   _LogInPageState createState() => _LogInPageState();
@@ -16,8 +17,8 @@ class _LogInPageState extends State<LogInPage> {
   final _formKey = GlobalKey<FormState>();
 
   // text field state
-  String email = '';
-  String password = '';
+  String _email = '';
+  String _password = '';
   String error = '';
 
   @override
@@ -44,27 +45,23 @@ class _LogInPageState extends State<LogInPage> {
                                       height: 160,
                                     ),
                                     TextFormField(
-                                      validator: (val) =>
-                                          val.isEmpty ? 'Enter an email' : null,
+                                      keyboardType: TextInputType.emailAddress,
                                       decoration:
                                           InputDecoration(labelText: 'Email'),
-                                      onChanged: (val) {
-                                        setState(() => email = val);
-                                      },
+                                      onChanged: (value) => setState(() {
+                                        _email = value;
+                                      }),
                                     ),
                                     SizedBox(
                                       height: 15,
                                     ),
                                     TextFormField(
-                                      validator: (val) => val.length < 6
-                                          ? 'Enter a password 6+ chars long'
-                                          : null,
                                       obscureText: true,
                                       decoration: InputDecoration(
                                           labelText: 'Password'),
-                                      onChanged: (val) {
-                                        setState(() => password = val);
-                                      },
+                                      onChanged: (value) => setState(() {
+                                        _password = value;
+                                      }),
                                     ),
                                   ])))),
                   SizedBox(
@@ -95,11 +92,15 @@ class _LogInPageState extends State<LogInPage> {
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       dynamic result = await _auth
-                                          .logInEmailPass(email, password);
-                                      if (result == null) {
+                                          .signInWithEmailAndPassword(
+                                              _email, _password);
+                                      var route = MaterialPageRoute(
+                                          builder: (context) => MenuPage());
+                                      Navigator.push(context, route);
+                                      /* if (result == null) {
                                         setState(() =>
                                             error = 'No se pudo ingresar');
-                                      }
+                                      } */
                                     }
                                   })),
                         ],
@@ -118,7 +119,9 @@ class _LogInPageState extends State<LogInPage> {
                                 decoration: TextDecoration.underline,
                               )),
                           onPressed: () {
-                            widget.toggleView();
+                            var route = MaterialPageRoute(
+                                builder: (context) => SignUpPage());
+                            Navigator.push(context, route);
                           },
                           /* var route = MaterialPageRoute(builder: (context) => LogInPage());
                   Navigator.push(context, route); */
@@ -135,7 +138,7 @@ class _LogInPageState extends State<LogInPage> {
   }
 }
 
-_getBottomRow(context) {
+/* _getBottomRow(context) {
   return Expanded(
     flex: 1,
     child: Row(
@@ -152,7 +155,7 @@ _getBottomRow(context) {
       ],
     ),
   );
-}
+} */
 
 /* _getSignIn(BuildContext context) {
   final AuthService _auth = AuthService(); //Instancia Servicio Auth

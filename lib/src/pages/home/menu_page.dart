@@ -4,7 +4,6 @@ import 'package:health_app/src/pages/body/meditation_page.dart';
 import 'package:health_app/src/pages/body/notes_page.dart';
 import 'package:health_app/src/pages/body/selfesteem_page.dart';
 import 'package:health_app/src/pages/home/login_page.dart';
-import 'package:health_app/src/services/authservice.dart';
 import 'user_data_page.dart';
 
 class MenuPage extends StatefulWidget {
