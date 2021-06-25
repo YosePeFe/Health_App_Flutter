@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
           title: 'Proyecto Final',
           debugShowCheckedModeBanner: false,
           home: Wrapper(),
-          
         ) //acceder a los datos del stream (usuario)
-        ); /* LogInPage()); */
+        );
   }
 }
