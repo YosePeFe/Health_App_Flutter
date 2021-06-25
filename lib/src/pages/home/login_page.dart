@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/signup_page.dart';
 import 'package:health_app/src/services/authservice.dart';
@@ -45,6 +46,9 @@ class _LogInPageState extends State<LogInPage> {
                                       height: 160,
                                     ),
                                     TextFormField(
+                                      validator: (value) => value.isEmpty
+                                          ? 'Enter your email'
+                                          : null,
                                       keyboardType: TextInputType.emailAddress,
                                       decoration:
                                           InputDecoration(labelText: 'Email'),
@@ -56,6 +60,9 @@ class _LogInPageState extends State<LogInPage> {
                                       height: 15,
                                     ),
                                     TextFormField(
+                                      validator: (value) => value.isEmpty
+                                          ? 'Enter your password'
+                                          : null,
                                       obscureText: true,
                                       decoration: InputDecoration(
                                           labelText: 'Password'),
@@ -91,22 +98,34 @@ class _LogInPageState extends State<LogInPage> {
                                   color: Colors.white,
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
-                                      dynamic result = await _auth
-                                          .signInWithEmailAndPassword(
-                                              _email, _password);
-                                      var route = MaterialPageRoute(
-                                          builder: (context) => MenuPage());
-                                      Navigator.push(context, route);
-                                      /* if (result == null) {
-                                        setState(() =>
-                                            error = 'No se pudo ingresar');
-                                      } */
+                                      try {
+                                        UserCredential userCredential =
+                                            await FirebaseAuth.instance
+                                                .signInWithEmailAndPassword(
+                                                    email: _email,
+                                                    password: _password)
+                                                .then((doc) {
+                                          var route = MaterialPageRoute(
+                                              builder: (context) => MenuPage());
+                                          Navigator.push(context, route);
+                                          return null;
+                                        });
+                                      } on FirebaseAuthException catch (e) {
+                                        if (e.code == 'user-not-found') {
+                                          setState(() {
+                                            error = "User not found";
+                                          });
+                                          print(error);
+                                        } else if (e.code == 'wrong-password') {
+                                          setState(() {
+                                            error = "Contraseña incorrecta";
+                                          });
+                                        }
+                                      }
                                     }
                                   })),
                         ],
                       )),
-                  /* _getSignIn(context), */
-                  /* _getBottomRow(context), */
                   Expanded(
                       flex: 1,
                       child: Container(
@@ -123,8 +142,6 @@ class _LogInPageState extends State<LogInPage> {
                                 builder: (context) => SignUpPage());
                             Navigator.push(context, route);
                           },
-                          /* var route = MaterialPageRoute(builder: (context) => LogInPage());
-                  Navigator.push(context, route); */
                         ),
                       ))
                 ],
@@ -137,107 +154,6 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 }
-
-/* _getBottomRow(context) {
-  return Expanded(
-    flex: 1,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.grey.shade700,
-          onPressed: () {
-            /* var route = MaterialPageRoute(builder: (context) => LogInPage());
-                  Navigator.push(context, route); */
-          },
-        ),
-      ],
-    ),
-  );
-} */
-
-/* _getSignIn(BuildContext context) {
-  final AuthService _auth = AuthService(); //Instancia Servicio Auth
-  String email = '';
-  String password = '';
-  return Expanded(
-    flex: 1,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          'Log in',
-          style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade800),
-        ),
-        CircleAvatar(
-          backgroundColor: Color(0xfff8ac6d1),
-          radius: 35,
-          child: IconButton(
-              icon: Icon(Icons.arrow_forward),
-              color: Colors.white,
-              onPressed: () async {
-                print(email);
-                print(password);
-              }
-              /* onPressed: () async {
-                dynamic result = await _auth.signInAnon();
-                if (result == null) {
-                  print('error signing in');
-                } else {
-                  print('signed in');
-                  print(result.uid);
-                }
-              } */
-              /* onPressed: () {
-              var route = MaterialPageRoute(builder: (context) => MenuPage());
-              Navigator.push(context, route);
-            }, */
-              ),
-        )
-      ],
-    ),
-  );
-} */
-
-/* _getTextFields() {
-  String email = '';
-  String password = '';
-  return Expanded(
-      flex: 4,
-      child: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'User Name'),
-              onChanged: (val) {
-                setState(() => email = val);
-              },
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
-              onChanged: (val) {
-                setState(() => password = val);
-              },
-            ),
-            SizedBox(
-              height: 25,
-            ),
-          ],
-        ),
-      ));
-} */
 
 _getHeader() {
   return Container(

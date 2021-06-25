@@ -14,14 +14,6 @@ class _HomeState extends State<Home> {
   User user;
   bool isloggedin = false;
 
-  /* checkAuthentification() async {
-    _auth.authStateChanges().listen((user) {
-      if (user == null) {
-        Navigator.of(context).pushReplacementNamed("Login");
-      }
-    });
-  } */
-
   getUser() async {
     User firebaseUser = _auth2.currentUser;
     await firebaseUser?.reload();

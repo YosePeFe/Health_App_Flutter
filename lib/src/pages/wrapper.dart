@@ -9,8 +9,6 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<Username>(
         context); // accesar a los datos del usuario al obtener un valor
-
-    //return either home or auth
     if (user == null) {
       return LogInPage();
     } else {

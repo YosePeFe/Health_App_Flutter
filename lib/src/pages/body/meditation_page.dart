@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:health_app/src/pages/home/menu_page.dart';
 
 List<Song> songs = [
-  Song('Behaviour of the mind', '3:25'),
-  Song('Your inner voice', '2:41'),
-  Song('Embrace your emotions', '3:16'),
-  Song('Letting go everything', '3:38'),
-  Song('Feel the sky', '2:56'),
-  Song('Go beyond the form', '3:24'),
-  Song('Love the feelings', '3:44'),
+  Song('Ve más allá de la forma', '1:56'),
+  Song('Tres minutos para relajarse', '3:40'),
+  Song('Dejando ir todo', '0:30'),
+  Song('Dos minutos para relajarse', '2:35'),
+  Song('Sé flexible y te mantendrás recto', '1:20'),
 ];
 
 class Song {
@@ -22,13 +20,11 @@ class Song {
 }
 
 List<Track> tracks = [
-  Track('audio-1.mp3'),
-  Track('audio-2.mp3'),
-  Track('audio-1.mp3'),
-  Track('audio-1.mp3'),
-  Track('audio-1.mp3'),
-  Track('audio-1.mp3'),
-  Track('audio-1.mp3'),
+  Track('audio_1.mp3'),
+  Track('audio_2.mp3'),
+  Track('audio_3.mp3'),
+  Track('audio_4.mp3'),
+  Track('audio_5.mp3'),
 ];
 
 class Track {
@@ -82,7 +78,7 @@ class CustomBottomBar extends StatelessWidget {
             ClipPath(
               clipper: BottomBarClipper(),
               child: Container(
-                height: 70,
+                height: 50,
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.only(top: 4),
@@ -148,7 +144,7 @@ class PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 55,
+      bottom: 40,
       left: MediaQuery.of(context).size.width / 2 - 30,
       child: Container(
         width: 60,
@@ -168,7 +164,7 @@ class PlayButton extends StatelessWidget {
         ),
         child: IconButton(
           onPressed: () {},
-          icon: Icon(Icons.play_arrow,
+          icon: Icon(Icons.music_note_rounded,
               color: Colors.white.withOpacity(0.9), size: 40),
         ),
       ),
@@ -198,8 +194,7 @@ class CustomBody extends StatelessWidget {
               itemCount: songs.length,
               itemExtent: 45,
               itemBuilder: (context, index) => ListTile(
-                leading:
-                    Icon(index == 0 ? Icons.play_arrow : Icons.pause, size: 22),
+                leading: Icon(Icons.play_arrow, size: 22),
                 onTap: () async {
                   if (isPLaying) {
                     player.stop();

@@ -6,16 +6,19 @@ import 'package:health_app/src/pages/home/menu_page.dart';
 import 'package:health_app/src/pages/body/add_note_page.dart';
 import 'package:health_app/src/pages/body/edit_note_page.dart';
 
-
 class NotesPage extends StatelessWidget {
-  final ref = FirebaseFirestore.instance.collection('notas').where('iduser',isEqualTo: FirebaseAuth.instance.currentUser.uid);
+  final ref = FirebaseFirestore.instance
+      .collection('notas')
+      .where('iduser', isEqualTo: FirebaseAuth.instance.currentUser.uid);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          focusColor: Color(0xfff8ac6d1),
-          hoverColor: Color(0xfff8ac6d1),
-          child: Icon(Icons.add),
+          backgroundColor: Color(0xfff8ac6d1),
+          child: Icon(
+            Icons.add_rounded,
+            size: 30,
+          ),
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AddNote()));
@@ -23,53 +26,66 @@ class NotesPage extends StatelessWidget {
         ),
         body: Stack(children: <Widget>[
           CustomBody(),
-          NavBar(),
-          StreamBuilder(
-              stream: ref.snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                return GridView.builder(
-                    padding: EdgeInsets.only(top: 90),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    itemCount: snapshot.hasData ? snapshot.data.docs.length : 0,
-                    itemBuilder: (_, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => EditNote(
-                                        docToEdit: snapshot.data.docs[index],
-                                      )));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.all(15),
-                          height: 100,
-                          color: Colors.grey[200],
-                          child: Column(
-                            children: [
-                              Text(
-                                snapshot.data.docs[index]['titulo'],
-                                style: TextStyle(
-                                    color: Colors.primaries[Random()
-                                        .nextInt(Colors.primaries.length)],
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                snapshot.data.docs[index]['contenido'],
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ],
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 90),
+            child: StreamBuilder(
+                stream: ref.snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
+                      itemCount:
+                          snapshot.hasData ? snapshot.data.docs.length : 0,
+                      itemBuilder: (_, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => EditNote(
+                                          docToEdit: snapshot.data.docs[index],
+                                        )));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey[200],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 6.0,
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.all(15),
+                            height: 100,
+                            child: Column(
+                              children: [
+                                Text(
+                                  snapshot.data.docs[index]['titulo'],
+                                  style: TextStyle(
+                                      color: Colors.primaries[Random()
+                                          .nextInt(Colors.primaries.length)],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  snapshot.data.docs[index]['contenido'],
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    });
-              })
+                        );
+                      });
+                }),
+          ),
+          NavBar(),
         ]));
     /* return Scaffold(
         body: Stack(children: <Widget>[

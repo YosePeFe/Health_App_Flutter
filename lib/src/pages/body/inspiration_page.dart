@@ -12,7 +12,11 @@ class InspirationPage extends StatelessWidget {
           backgroundColor: Color(0xfff8ac6d1),
         ), */
       body: Stack(
-        children: <Widget>[CustomBody(), _swiperTarjetas(context), NavBar()],
+        children: <Widget>[
+          CustomBody(),
+          _swiperTarjetas(context),
+          NavBar(),
+        ],
       ),
     );
   }
