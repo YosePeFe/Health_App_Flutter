@@ -93,12 +93,7 @@ class CustomBottomBar extends StatelessWidget {
                       Color(0xfffbbded6),
                       Color(0xfff8ac6d1),
                       Color(0xfff8ac6d1),
-                      /* Colors.blueGrey.shade800,
-                      Colors.blueGrey.shade800,
-                      Colors.blue.shade800,
-                      Colors.blue.shade300,
-                      Colors.blueGrey.shade800,
-                      Colors.blueGrey.shade800, */
+                      
                     ],
                   ),
                 ),
@@ -109,26 +104,7 @@ class CustomBottomBar extends StatelessWidget {
                     height: double.infinity,
                     padding: EdgeInsets.only(bottom: 15),
                     color: Colors.grey.shade50,
-                    /* decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.blueGrey.shade100,
-                          Colors.blueGrey.shade100,
-                          Colors.blueGrey.shade100,
-                          Colors.blueGrey.shade100,
-                        ],
-                      ),
-                    ), */
-                    /* child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text('2.30', style:TextStyle(color: Colors.black38, fontWeight: FontWeight.w500,),),
-                        Text('Rainforest - Relaxing', style:TextStyle(color: Colors.black87, fontWeight: FontWeight.w500,),),
-                        Text('-0.50', style:TextStyle(color: Colors.black38, fontWeight: FontWeight.w500,),),
-                      ],
-                    ), */
+                    
                   ),
                 ),
               ),
@@ -157,8 +133,7 @@ class PlayButton extends StatelessWidget {
             colors: [
               Color(0xfff8ac6d1),
               Color(0xfffbbded6),
-              /* Colors.blueGrey.shade900,
-              Colors.blue.shade700, */
+              
             ],
           ),
         ),
@@ -198,10 +173,8 @@ class CustomBody extends StatelessWidget {
                 onTap: () async {
                   if (isPLaying) {
                     player.stop();
-                    print('pausó');
                     isPLaying = false;
                   } else {
-                    print('juan');
                     player = await cache.play(tracks[index].name);
                     isPLaying = true;
                   }
@@ -246,13 +219,7 @@ class CustomHeader extends StatelessWidget {
                       Navigator.push(context, route);
                     },
                   ),
-                  /* IconButton(
-                    icon: Icon(
-                      Icons.share,
-                      color: Colors.white54,
-                    ),
-                    onPressed: () {},
-                  ), */
+                  
                 ],
               ),
               SizedBox(height: 25),
@@ -294,17 +261,7 @@ class HeaderBackground extends StatelessWidget {
     return Stack(
       alignment: Alignment.topCenter,
       children: <Widget>[
-        /* Container(
-          width: 150,
-          height: 150,
-          margin: EdgeInsets.only(top: 275),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-                blurRadius: 100,
-                spreadRadius: 20,
-                color: Colors.blueGrey.shade800)
-          ]),
-        ), */
+        
         ClipPath(
           clipper: HeaderClipper(),
           child: Container(

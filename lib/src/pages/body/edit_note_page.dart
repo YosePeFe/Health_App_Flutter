@@ -24,47 +24,7 @@ class _EditNoteState extends State<EditNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /* floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xfff8ac6d1),
-        child: Icon(Icons.save_rounded),
-        onPressed: () {
-          widget.docToEdit.reference.update({
-            'titulo': titulo.text,
-            'contenido': contenido.text
-          }).whenComplete(() => Navigator.pop(context));
-          /* ref.add({
-                  'titulo': titulo.text,
-                  'contenido': contenido.text
-                }).whenComplete(() => Navigator.pop(context)); */
-        },
-      ), */
-      /* appBar: AppBar(
-        actions: [
-          FlatButton(
-              onPressed: () {
-                widget.docToEdit.reference.update({
-                  'titulo': titulo.text,
-                  'contenido': contenido.text
-                }).whenComplete(() => Navigator.pop(context));
-                /* ref.add({
-                  'titulo': titulo.text,
-                  'contenido': contenido.text
-                }).whenComplete(() => Navigator.pop(context)); */
-              },
-              child: Text('Save')),
-          FlatButton(
-              onPressed: () {
-                widget.docToEdit.reference
-                    .delete()
-                    .whenComplete(() => Navigator.pop(context));
-                /* ref.add({
-                  'titulo': titulo.text,
-                  'contenido': contenido.text
-                }).whenComplete(() => Navigator.pop(context)); */
-              },
-              child: Text('Delete'))
-        ],
-      ), */
+      
       body: Stack(
         children: <Widget>[
           CustomBody(),
@@ -153,10 +113,7 @@ class _EditNoteState extends State<EditNote> {
                     widget.docToEdit.reference
                         .delete()
                         .whenComplete(() => Navigator.pop(context));
-                    /* ref.add({
-                  'titulo': titulo.text,
-                  'contenido': contenido.text
-                }).whenComplete(() => Navigator.pop(context)); */
+                    
                   },
                 ),
               ],

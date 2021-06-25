@@ -87,71 +87,10 @@ class NotesPage extends StatelessWidget {
           ),
           NavBar(),
         ]));
-    /* return Scaffold(
-        body: Stack(children: <Widget>[
-      CustomBody(),
-      NavBar(),
-      Container(
-          padding: EdgeInsets.only(top: 90),
-          child: StaggeredGridView.count(
-            padding: const EdgeInsets.all(12),
-            primary: false,
-            crossAxisCount: 4,
-            staggeredTiles: const <StaggeredTile>[
-              StaggeredTile.fit(2),
-              StaggeredTile.fit(2),
-              StaggeredTile.fit(1),
-              StaggeredTile.fit(3),
-              StaggeredTile.fit(3),
-              StaggeredTile.fit(1),
-              StaggeredTile.fit(2),
-              StaggeredTile.fit(2),
-            ],
-            children: const <Widget>[
-              _Tile(1),
-              _Tile(2),
-              _Tile(3),
-              _Tile(4),
-              _Tile(5),
-              _Tile(6),
-              _Tile(7),
-              _Tile(8),
-            ],
-          )),
-    ])); */
   }
 }
 
-/* class _Tile extends StatelessWidget {
-  const _Tile(this.index);
 
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  'Note $index',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Text(
-                  'Contenido',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-} */
 
 class CustomBody extends StatelessWidget {
   @override

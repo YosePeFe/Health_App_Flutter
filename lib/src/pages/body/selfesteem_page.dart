@@ -18,22 +18,18 @@ class _SelfesteemPageState extends State<SelfesteemPage> {
     super.initState();
     _controller = VideoPlayerController.asset('assets/video_1.mp4')
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
     _controller2 = VideoPlayerController.asset('assets/video_2.mp4')
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
     _controller3 = VideoPlayerController.asset('assets/video_3.mp4')
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
     _controller4 = VideoPlayerController.asset('assets/video_4.mp4')
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
   }
@@ -299,97 +295,6 @@ class _SelfesteemPageState extends State<SelfesteemPage> {
     super.dispose();
     _controller.dispose();
   }
-}
-
-@override
-Widget build(BuildContext context) {
-  return Stack(
-    children: [
-      Column(children: [
-        SizedBox(
-          height: 80,
-        ),
-        Container(
-            child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          margin: EdgeInsets.all(25),
-          elevation: 10,
-          child: Column(
-            children: <Widget>[
-              Container(
-                  height: 200,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.play_circle_outline_rounded,
-                        color: Color(0xfff8ac6d1),
-                        size: 100,
-                      ),
-                    ],
-                  )),
-              ListTile(
-                contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
-                title: Text(
-                  'Self-Esteem',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-                subtitle: Text(
-                  '"You yourself, as much as anybody in the entire universe, deserve your love and affection." -- Buddha',
-                  style: TextStyle(fontSize: 15),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              )
-            ],
-          ),
-        )),
-        Container(
-            child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          margin: EdgeInsets.all(25),
-          elevation: 10,
-          child: Column(
-            children: <Widget>[
-              Container(
-                  height: 200,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.play_circle_outline_rounded,
-                        color: Color(0xfff8ac6d1),
-                        size: 100,
-                      ),
-                    ],
-                  )),
-              ListTile(
-                contentPadding: EdgeInsets.fromLTRB(15, 0, 25, 0),
-                title: Text(
-                  'Self-Esteem',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-                subtitle: Text(
-                  '"Too many people overvalue what they are not and undervalue what they are." -- Malcolm S. Forbes',
-                  style: TextStyle(fontSize: 15),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              )
-            ],
-          ),
-        )),
-      ]),
-    ],
-  );
 }
 
 class CustomBody extends StatelessWidget {

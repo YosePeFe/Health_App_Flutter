@@ -6,11 +6,7 @@ class InspirationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /* appBar: AppBar(
-          centerTitle: false,
-          title: Text('Inspiration'),
-          backgroundColor: Color(0xfff8ac6d1),
-        ), */
+      
       body: Stack(
         children: <Widget>[
           CustomBody(),

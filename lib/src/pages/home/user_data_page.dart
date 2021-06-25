@@ -18,9 +18,7 @@ class _HomeState extends State<Home> {
     User firebaseUser = _auth2.currentUser;
     await firebaseUser?.reload();
     firebaseUser = _auth2.currentUser;
-    /* FirebaseFirestore.instance.collection('usuarios').doc(firebaseUser.uid).get().then((value) => setState((){
-      this.user.nombre = 
-    })); */
+    
     if (firebaseUser != null) {
       setState(() {
         this.user = firebaseUser;

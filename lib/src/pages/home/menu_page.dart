@@ -19,11 +19,10 @@ class _MenuPageState extends State<MenuPage> {
       body: Stack(
         children: <Widget>[
           CustomBody(),
-          // CustomAppbar(),
+        
           NavBar(),
           _getBackBtn(context),
           _getProfileBtn(context),
-          /* _getSignOutBtn(context), */
         ],
       ),
     );
@@ -62,27 +61,6 @@ _getProfileBtn(BuildContext context) {
         ),
       ));
 }
-
-/* _getSignOutBtn(BuildContext context) {
-  final AuthService _auth = AuthService();
-  return Positioned(
-      bottom: 25,
-      left: 85,
-      child: CircleAvatar(
-        backgroundColor: Color(0xfff8ac6d1),
-        radius: 25,
-        child: IconButton(
-            icon: Icon(Icons.login_rounded),
-            color: Colors.white,
-            /* onPressed: () {
-            var route = MaterialPageRoute(builder: (context) => SignUpPage());
-            Navigator.push(context, route);
-          }, */
-            onPressed: () async {
-              await _auth.signOut();
-            }),
-      ));
-} */
 
 class CustomBody extends StatelessWidget {
   @override
@@ -174,16 +152,7 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        /*Positioned(
-            bottom: 0,
-            child: ClipPath(
-              clipper: NavBarClipper(),
-              child: Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                color: Color(0xff1e1e1e),
-              ), 
-            )),*/
+        
         Positioned(
             top: 110,
             right: 10,
@@ -247,38 +216,7 @@ class NavBar extends StatelessWidget {
                 ),
               ],
             )),
-        /* Positioned(
-          bottom: 10,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text(
-                'Focus',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(width: 1),
-              Text(
-                'Relax',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(width: 1),
-              Text(
-                'sleep',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ) */
+        
       ],
     );
   }
@@ -319,53 +257,3 @@ class MiddClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
-/* class NavIcon extends StatelessWidget {
-  final IconData icon;
-  final bool active;
-
-  const NavIcon({
-    this.icon,
-    this.active,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 30,
-      backgroundColor: Color(0xff1e1e1e),
-      child: CircleAvatar(
-        radius: 25,
-        backgroundColor: active ? Colors.grey.shade100 : Colors.transparent,
-        child: Icon(
-          icon,
-          color: active ? Colors.black87 : Colors.white,
-        ),
-      ),
-    );
-  }
-}
-
-class NavBarClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    var sw = size.width;
-    var sh = size.height;
-    path.cubicTo(sw / 12, 0, sw / 12, 2 * sh / 5, 2 * sw / 12, 2 * sh / 5);
-    path.cubicTo(3 * sw / 12, 2 * sh / 5, 3 * sw / 12, 0, 4 * sw / 12, 0);
-    path.cubicTo(
-        5 * sw / 12, 0, 5 * sw / 12, 2 * sh / 5, 6 * sw / 12, 2 * sh / 5);
-    path.cubicTo(7 * sw / 12, 2 * sh / 5, 7 * sw / 12, 0, 8 * sw / 12, 0);
-    path.cubicTo(
-        9 * sw / 12, 0, 9 * sw / 12, 2 * sh / 5, 10 * sw / 12, 2 * sh / 5);
-    path.cubicTo(11 * sw / 12, 2 * sh / 5, 11 * sw / 12, 0, sw, 0);
-    path.lineTo(sw, sh);
-    path.lineTo(0, sh);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-}
-*/

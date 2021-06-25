@@ -21,19 +21,7 @@ class AddNote extends StatelessWidget {
           }).whenComplete(() => Navigator.pop(context));
         },
       ),
-      /* appBar: AppBar(
-        actions: [
-          FlatButton(
-              onPressed: () {
-                ref.add({
-                  'titulo': titulo.text,
-                  'contenido': contenido.text,
-                  'iduser': FirebaseAuth.instance.currentUser.uid,
-                }).whenComplete(() => Navigator.pop(context));
-              },
-              child: Text('Save')),
-        ],
-      ), */
+      
       body: Stack(
         children: <Widget>[
           CustomBody(),
